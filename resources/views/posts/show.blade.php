@@ -8,7 +8,7 @@
                     <div class="card-header">
                         <h3>{{ $post->title }}</h3>
                         <small>
-                            Categories: 
+                            Tags: 
                             @forelse ($tags as $tag)
                                 {{ $tag->text }}
                             @empty
@@ -58,6 +58,7 @@
                         @endforeach
                     </div>
                 </div>
+                <br>
                 <div class="card">
                     <div class="card-header">
                         <h4>Comment something</h4>

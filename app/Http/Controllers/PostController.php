@@ -20,6 +20,19 @@ class PostController extends Controller
         //$this->authorizeResource(Post::class, 'post');
     }
 
+    public function getCleanedTags($tags){
+        $cleaned_tags = [];
+        $i = 0;
+        foreach ($tags as $tag) {
+            $t = trim($tag);
+            if ($t != "") {
+                $cleaned_tags[$i] = $t;
+                $i++;
+            }
+        }
+        return $cleaned_tags;
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -68,7 +81,7 @@ class PostController extends Controller
         $validated = $request->validate([
             'title' => 'required|max:191',
             'content' => 'required|max:191',
-            'tags' => 'required'
+            'tags' => ''
         ]);
 
         $post = Post::create([
@@ -79,12 +92,13 @@ class PostController extends Controller
             'updated_at' => now()
         ]);
 
-        $tags = explode(',', trim($request->get('tags')));
+        //treiem els espais en blanc dels tags i els guardem en un array nou
+        $tags = explode(',', $validated['tags']);
 
-        foreach ($tags as $tag) {
-            $t = Tag::create(['text' => $tag]);
-            $post->tags()->attach($t);
-        }
+        $cleaned_tags = $this->getCleanedTags($tags);
+
+        $tag_controller = new TagController();
+        $tag_controller->store($cleaned_tags, $post);
 
         $post->save();
 
@@ -125,7 +139,14 @@ class PostController extends Controller
 
         $this->authorize('update', $post);
 
-        return view('posts.edit', ['post' => $post]);
+        $tags = $post->tags()->get();
+
+        $str_tags = "";
+        foreach ($tags as $tag) {
+            $str_tags .= $tag->text . ",";
+        }
+
+        return view('posts.edit', ['post' => $post, 'tags' => $str_tags]);
     }
 
     /**

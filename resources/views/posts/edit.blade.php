@@ -18,9 +18,15 @@
                                     value="{{ $post->title }}">
                             </div>
 
-                            <label for="content" class="form-label">Content</label>
                             <div class="mb-3">
+                                <label for="content" class="form-label">Content</label>
                                 <textarea name="content" id="content" class="form-control" cols="10" rows="5">{{ $post->content }}</textarea>
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="tags" class="form-label">Tags</label>
+                                <input id="tags" name="tags" type="text" class="form-control"
+                                    placeholder="Split tags by commas" value="{{ $tags }}">
                             </div>
 
                             <div class="mb-3">

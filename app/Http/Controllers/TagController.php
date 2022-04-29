@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Tag;
 use Illuminate\Http\Request;
+use App\Post;
 
 class TagController extends Controller
 {
@@ -30,12 +31,22 @@ class TagController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  $tag_array array de strings de tags
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store($tags_array, Post $post)
     {
         //
+        foreach ($tags_array as $tag) {
+            $t = Tag::where('text', $tag)->get();
+            //si aquesta consulta no retorna res, vol dir que el tag no existeix a la taula i per tant el creem
+            if (count($t) == 0) {
+                $newTag = Tag::create(['text' => $tag]);
+                $post->tags()->attach($newTag);
+            } else {
+                $post->tags()->attach($t);
+            }
+        }
     }
 
     /**

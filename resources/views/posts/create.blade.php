@@ -16,8 +16,8 @@
                                 <input id="title" name="title" type="text" class="form-control">
                             </div>
 
-                            <label for="content" class="form-label">Content</label>
                             <div class="mb-3">
+                                <label for="content" class="form-label">Content</label>
                                 <textarea name="content" id="content" class="form-control" cols="10" rows="5"></textarea>
                             </div>
                             

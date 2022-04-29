@@ -53,7 +53,6 @@ class CommentPolicy
 
     public function store(User $user)
     {
-        dd($user);
         if ($user->id > 0) {
             return true;
         }

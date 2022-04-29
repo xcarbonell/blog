@@ -23,6 +23,8 @@ use App\Post;
     return view('welcome');
 });*/
 
+Route::get('posts/{tags}/getCleanedTags', 'PostController@getCleanedTags');
+Route::resource('posts', 'PostController');
 //Route::get('/', [IndexController::class, 'index'])->name('index');
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
@@ -74,7 +76,7 @@ Route::post('posts/store', 'PostController@store')->name('posts.store');
 //esborrar un post
 Route::get('posts/{id}/destroy', 'PostController@destroy')->name('posts.destroy');
 
-//  ******  RUTES DELS POSTS    ******
+//  ******  RUTES DELS COMENTARIS    ******
 
 //crear un comentari
 Route::post('comments/{id}/store', 'CommentController@store')->name('comments.store');
@@ -110,3 +112,8 @@ Route::get('/home', 'HomeController@index')->name('home');
 Route::get('unauthorized', function () {
     return view('unauthorized');
 });
+/*
+Route::get('posts/{$tags}/getCleanedTags', 'PostController@getCleanedTags');
+Route::resource('posts', 'PostController');
+Route::get('/posts/getCleanedTags', [PostController::class, 'getCleanedTags']);
+Route::resource('posts', PostController::class);*/
