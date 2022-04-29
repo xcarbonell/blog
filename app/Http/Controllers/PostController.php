@@ -20,19 +20,6 @@ class PostController extends Controller
         //$this->authorizeResource(Post::class, 'post');
     }
 
-    public function getCleanedTags($tags){
-        $cleaned_tags = [];
-        $i = 0;
-        foreach ($tags as $tag) {
-            $t = trim($tag);
-            if ($t != "") {
-                $cleaned_tags[$i] = $t;
-                $i++;
-            }
-        }
-        return $cleaned_tags;
-    }
-
     /**
      * Display a listing of the resource.
      *
@@ -94,7 +81,6 @@ class PostController extends Controller
 
         //treiem els espais en blanc dels tags i els guardem en un array nou
         $tags = explode(',', $validated['tags']);
-
         $cleaned_tags = $this->getCleanedTags($tags);
 
         $tag_controller = new TagController();
@@ -163,11 +149,21 @@ class PostController extends Controller
 
         $this->authorize('update', $post);
 
+        //eliminem les relacions dels tags antics
+        $post->tags()->detach();
+
+        //obtenim i netejem els tags
+        $tags = $this->getCleanedTags(explode(",", $request->get('tags')));
+
+        //tornem a crear les relacions i creem tags si n'hi ha de nous
+        $tag_controller = new TagController();
+        $tag_controller->store($tags, $post);
+
         $post->title = $request->get('title');
         $post->content = $request->get('content');
         $post->updated_at = now();
 
-        $post->save();
+        $post->update();
 
         return back();
     }
@@ -192,5 +188,20 @@ class PostController extends Controller
         $post->delete();
 
         return redirect('posts');
+    }
+
+    //funcio que serveix per eliminar els tags que poden ser espais en blanc
+    public function getCleanedTags($tags)
+    {
+        $cleaned_tags = [];
+        $i = 0;
+        foreach ($tags as $tag) {
+            $t = trim($tag);
+            if ($t != "") {
+                $cleaned_tags[$i] = $t;
+                $i++;
+            }
+        }
+        return $cleaned_tags;
     }
 }
