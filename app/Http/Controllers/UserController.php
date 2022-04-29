@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use App\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use App\Comment;
+use App\Post;
 
 class UserController extends Controller
 {
@@ -56,7 +58,6 @@ class UserController extends Controller
     public function store(Request $request)
     {
         //
-
         $user = new User();
 
         $user->username = $request->get('username');
@@ -144,6 +145,18 @@ class UserController extends Controller
 
         $this->authorize('delete', $user, Auth::user());
 
+        //esborrem els seus comentaris
+        Comment::where('user_id', $id)->delete();
+
+        //per poder esborrar els seus posts, primer hem d'eliminar algunes coses
+        $posts = Post::where('user_id', $id)->get();
+        foreach ($posts as $post) {
+            $post->tags()->detach();
+            Comment::where('post_id', $post->id)->delete();
+            $post->delete();
+        }
+
+        //finalment eliminem l'usuari
         $user->delete();
 
         return back();

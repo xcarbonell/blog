@@ -181,7 +181,7 @@ class PostController extends Controller
 
         $this->authorize('delete', $post);
 
-        DB::table('post_tag')->where('post_id', '=', $id)->delete();
+        $post->tags()->detach();
 
         Comment::where('post_id', $id)->delete();
 
