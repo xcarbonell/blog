@@ -8,9 +8,9 @@
                     <div class="card-header">
                         <h3>{{ $post->title }}</h3>
                         <small>
-                            Tags: 
+                            Tags:
                             @forelse ($tags as $tag)
-                                {{ $tag->text }}
+                                <a href="{{ route('tags.show', $tag->id) }}">{{ $tag->text }}</a>
                             @empty
                                 This post hasn't tags.
                             @endforelse

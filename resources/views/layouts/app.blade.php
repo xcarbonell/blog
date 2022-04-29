@@ -40,6 +40,13 @@
                     <ul class="navbar-nav mr-auto">
 
                     </ul>
+                    
+                    <form class="form-inline my-2 my-lg-0" method="GET" action="{{ route('tags') }}">
+                        @method('GET')
+                        @csrf
+                        <input id="search" name="search" class="form-control mr-sm-2" type="search" placeholder="Search tags or posts" aria-label="Search">
+                        <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+                    </form>
 
                     <!-- Right Side Of Navbar -->
                     <ul class="navbar-nav ml-auto">
@@ -63,7 +70,7 @@
 
                                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
                                     <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault();
-                                                             document.getElementById('logout-form').submit();">
+                                                                         document.getElementById('logout-form').submit();">
                                         {{ __('Logout') }}
                                     </a>
                                     <a class="dropdown-item" href="{{ route('posts') }}">

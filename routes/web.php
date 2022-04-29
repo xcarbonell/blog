@@ -83,6 +83,17 @@ Route::post('comments/{id}/store', 'CommentController@store')->name('comments.st
 
 //esborrar un comentari
 Route::get('comments/{id}/destroy', 'CommentController@destroy')->name('comments.destroy');
+
+//  ******  RUTES DELS TAGS    ******
+
+//veure els posts que tenen un tag en particular
+Route::get('tags/{id}/show', 'TagController@show')->name('tags.show');
+
+//  ******  RUTES DE LES BUSQUES   ******
+
+//veure els resultats de les busques
+Route::get('tags', 'TagController@index')->name('tags');
+
 /*
 Route::get('posts/{post?}', function ($id = null) {
     if ($id == null) {

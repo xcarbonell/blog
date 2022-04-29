@@ -32,7 +32,6 @@ class PostController extends Controller
 
         $post_tag = [];
         $i = 0;
-
         foreach ($posts as $post) {
             $post_tag[$i] = $post->tags()->get();
             $i++;

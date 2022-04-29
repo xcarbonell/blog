@@ -23,7 +23,8 @@
                                     <small>
                                         @if (count($post_tag[$i]) > 0)
                                             @for ($j = 0; $j < count($post_tag[$i]); $j++)
-                                                {{ $post_tag[$i][$j]->text }}
+                                                <a
+                                                    href="{{ route('tags.show', $post_tag[$i][$j]->id) }}">{{ $post_tag[$i][$j]->text }}</a>
                                             @endfor
                                         @else
                                             This post hasn't tags.
@@ -48,7 +49,8 @@
                                     <small>
                                         @if (count($post_tag[$i]) > 0)
                                             @for ($j = 0; $j < count($post_tag[$i]); $j++)
-                                                {{ $post_tag[$i][$j]->text }}
+                                                <a
+                                                    href="{{ route('tags.show', $post_tag[$i][$j]->id) }}">{{ $post_tag[$i][$j]->text }}</a>
                                             @endfor
                                         @else
                                             This post hasn't tags.
@@ -71,7 +73,8 @@
                                 <small>
                                     @if (count($post_tag[$i]) > 0)
                                         @for ($j = 0; $j < count($post_tag[$i]); $j++)
-                                            {{ $post_tag[$i][$j]->text }}
+                                            <a
+                                                href="{{ route('tags.show', $post_tag[$i][$j]->id) }}">{{ $post_tag[$i][$j]->text }}</a>
                                         @endfor
                                     @else
                                         This post hasn't tags.
